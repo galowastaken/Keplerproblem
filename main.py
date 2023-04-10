@@ -5,23 +5,23 @@ from matplotlib import pyplot as plt
 
 gravConst = 6.674 * pow(10, -11)
 
-m1 = pow(10, 15)
-m2 = pow(10, 15)
+m1 = 100
+m2 = 50
 
-R1Start = np.array([-100, -1000, -100])
-R2Start = np.array([100, -1000, 100])
+R1Start = np.array([0, 0, 0])
+R2Start = np.array([10, 10, 0])
 
-V1Start = np.array([-10, 1000, 0])
-V2Start = np.array([10, 1000, 0])
+V1Start = np.array([10, 0, 0])
+V2Start = np.array([0, 10, 0])
 
-dt = 0.5
+dt = 0.1
 
 # create plot variables
 
 ax = plt.axes(projection='3d')
-ax.set_xlim(-1000, 1000)
-ax.set_ylim(-1000, 500000)
-ax.set_zlim(-500, 500)
+ax.set_xlim(0, 100)
+ax.set_ylim(0, 100)
+ax.set_zlim(0, 100)
 
 # propagate vectors
 
@@ -37,13 +37,13 @@ R2_old = R2Start
 V1_old = V1Start
 V2_old = V2Start
 
-for i in range(1000):
+for i in range(100):
 
     A1_old = gravConst*m2*np.add(R2_old, -R1_old) / pow(np.linalg.norm(np.add(R2_old, -R1_old)), 3)
     A2_old = gravConst*m1*np.add(-R2_old, R1_old) / pow(np.linalg.norm(np.add(R2_old, -R1_old)), 3)
 
-    R1_new = np.add(np.add(R1_old, V1_old*dt), A1_old*0.5*dt*dt)
-    R2_new = np.add(np.add(R2_old, V2_old*dt), A2_old*0.5*dt*dt)
+    R1_new = np.add(R1_old, V1_old*dt, A1_old*0.5*dt*dt)
+    R2_new = np.add(R2_old, V2_old*dt, A2_old*0.5*dt*dt)
 
     A1_new = gravConst*m2*np.add(R2_new, -R1_new) / pow(np.linalg.norm(np.add(R2_new, -R1_new)), 3)
     A2_new = gravConst*m1*np.add(-R2_new, R1_new) / pow(np.linalg.norm(np.add(R2_new, -R1_new)), 3)
