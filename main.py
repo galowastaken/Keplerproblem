@@ -114,9 +114,9 @@ def rungeKutta(R1Start, R2Start, V1Start, V2Start):
         F1_old = gravConst * m2 * np.add(R2old, -R1old) / pow(np.linalg.norm(np.add(R2old, -R1old)), 3)
         U1_old = np.array([R1old[0], R1old[1], V1old[0], V1old[1]])
         K1_1_new = np.array([V1old[0], V1old[1], F1_old[0], F1_old[1]])
-        K1_2_new = U1_old + 0.5 * K1_1_new
-        K1_3_new = U1_old + 0.5 * K1_2_new
-        K1_4_new = U1_old + K1_3_new
+        K1_2_new = np.add(K1_1_new, 0.5 * K1_1_new)
+        K1_3_new = np.add(K1_1_new, 0.5 * K1_2_new)
+        K1_4_new = np.add(K1_1_new, K1_3_new)
 
         if i==0 or i == 1 or i == 50:
             print(F1_old)
@@ -124,9 +124,9 @@ def rungeKutta(R1Start, R2Start, V1Start, V2Start):
         F2_old = gravConst * m1 * np.add(-R2old, R1old) / pow(np.linalg.norm(np.add(R2old, -R1old)), 3)
         U2_old = np.array([R2old[0], R2old[1], V2old[0], V2old[1]])
         K2_1_new = np.array([V2old[0], V2old[1], F2_old[0], F2_old[1]])
-        K2_2_new = U2_old + 0.5 * K2_1_new
-        K2_3_new = U2_old + 0.5 * K2_2_new
-        K2_4_new = U2_old + K2_3_new
+        K2_2_new = np.add(K2_1_new, 0.5 * K2_1_new)
+        K2_3_new = np.add(K2_1_new, 0.5 * K2_2_new)
+        K2_4_new = np.add(K2_1_new, K2_3_new)
 
         U1_new = np.add(U1_old, dt * np.add(np.add(np.add(1 / 6 * K1_1_new, 1 / 3 * K1_2_new), 1 / 3 * K1_3_new), 1 / 6 * K1_4_new))
         U2_new = np.add(U2_old, dt * np.add(np.add(np.add(1 / 6 * K2_1_new, 1 / 3 * K2_2_new), 1 / 3 * K2_3_new), 1 / 6 * K2_4_new))
